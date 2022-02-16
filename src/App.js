@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { ThemeProvider } from "@material-ui/core";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
+import Layout from "./components/Layout";
+import Planets from "./components/Planets";
+import People from "./components/People";
+import theme from "./themes/main";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <QueryClientProvider client={new QueryClient()}>
+        <BrowserRouter>
+          <Layout>
+            <Routes>
+              <Route index element={<Planets />} />
+              <Route path="/planets" element={<Planets />} />
+              <Route path="/people" element={<People />} />
+            </Routes>
+          </Layout>
+        </BrowserRouter>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
-
-export default App;
